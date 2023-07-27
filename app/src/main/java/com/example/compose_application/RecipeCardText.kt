@@ -92,11 +92,4 @@ fun RecipeCard(recipe: Recipe= defaultRecipes[0], modifier: Modifier?= Modifier.
 }
 
 
-@Composable
-fun showToast(message: String) {
-    message.let {
-        Toast.makeText(LocalContext.current, it, Toast.LENGTH_SHORT).show()
-    }
-}
-
 
