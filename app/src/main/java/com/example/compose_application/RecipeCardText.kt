@@ -28,7 +28,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalContext
 import kotlinx.coroutines.coroutineScope
 
-@OptIn(ExperimentalFoundationApi::class)
+
 @Composable
 @Preview
 fun RecipeCard(recipe: Recipe= defaultRecipes[0], modifier: Modifier?= Modifier.padding(16.dp)) {
