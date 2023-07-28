@@ -21,14 +21,19 @@ import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Card
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 
 
 
 @Composable
-fun TaskCard(task: Task,isStarClicked: Boolean, onStarClicked: (Boolean) -> Unit,isCompleteClicked: Boolean, onCompleteClicked: (Boolean) -> Unit) {
-    val starColor = if (isStarClicked) Color(0xFFDAA520) else Color.DarkGray
-    val completeColor = if (isCompleteClicked) Color(0xFFDAA520) else Color.DarkGray
+fun TaskCard(task: Task) {
+    val isStarClickedState = remember { mutableStateOf(task.isFavorite) }
+    val isCompleteClickedState = remember { mutableStateOf(task.isComplete) }
+
+    val starColor = if (isStarClickedState.value) Color(0xFFDAA520) else Color.DarkGray
+    val completeColor = if (isCompleteClickedState.value) Color(0xFFDAA520) else Color.DarkGray
 
     Card(
         modifier = Modifier
@@ -48,7 +53,7 @@ fun TaskCard(task: Task,isStarClicked: Boolean, onStarClicked: (Boolean) -> Unit
                 tint = completeColor,
                 modifier = Modifier.clickable {
                     task.isComplete = !task.isComplete
-                  onCompleteClicked(!isCompleteClicked)
+                    isCompleteClickedState.value =  task.isComplete
                 } // Add click listener
             )
 
@@ -68,7 +73,7 @@ fun TaskCard(task: Task,isStarClicked: Boolean, onStarClicked: (Boolean) -> Unit
                 tint = starColor,
                 modifier = Modifier.clickable {
                     task.isFavorite = !task.isFavorite
-                    onStarClicked(!isStarClicked)
+                    isStarClickedState.value =  task.isFavorite
                 } // Add click listener
             )
         }
