@@ -1,6 +1,5 @@
 package com.example.compose_application
 
-
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -12,18 +11,16 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.compose_application.todo.TaskList
 import com.example.compose_application.ui.theme.Compose_ApplicationTheme
-
+import androidx.compose.runtime.*
+import com.example.compose_application.todo.TaskList
+import com.example.compose_application.todo.TaskList
 
 
 class MainActivity : ComponentActivity() {
@@ -31,6 +28,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             TaskList()
+
         }
     }
 
@@ -40,7 +38,6 @@ class MainActivity : ComponentActivity() {
 
 
 @Composable
-@Preview(showBackground = true)
 private fun ClickedOnButton(){
    var count by rememberSaveable { mutableStateOf(0)}
     Compose_ApplicationTheme {
@@ -74,3 +71,4 @@ private fun CallRecipeList(){
         }
     }
 }
+

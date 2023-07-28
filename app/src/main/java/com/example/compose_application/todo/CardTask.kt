@@ -21,25 +21,28 @@ import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Card
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 
 
 
 @Composable
-fun TaskCard(task: Task) {
-    val isStarClickedState = remember { mutableStateOf(task.isFavorite) }
-    val isCompleteClickedState = remember { mutableStateOf(task.isComplete) }
+fun TaskCard(task: Task,onCompleteClick:() -> Unit) {
+    var isStarClickedState by remember { mutableStateOf(task.isFavorite) }
+    var isCompleteClickedState by remember { mutableStateOf(task.isComplete) }
 
-    val starColor = if (isStarClickedState.value) Color(0xFFDAA520) else Color.DarkGray
-    val completeColor = if (isCompleteClickedState.value) Color.Green else Color.DarkGray
+    val starColor = if (isStarClickedState) Color(0xFFDAA520) else Color.DarkGray
+    val completeColor = if (isCompleteClickedState) Color.Green else Color.DarkGray
 
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp),
-        shape = RoundedCornerShape(8.dp),
+        shape = RoundedCornerShape(15.dp),
 
     ) {
         Row(
@@ -53,7 +56,9 @@ fun TaskCard(task: Task) {
                 tint = completeColor,
                 modifier = Modifier.clickable {
                     task.isComplete = !task.isComplete
-                    isCompleteClickedState.value =  task.isComplete
+                    isCompleteClickedState =  task.isComplete
+                    onCompleteClick()
+
                 } // Add click listener
             )
 
@@ -73,10 +78,12 @@ fun TaskCard(task: Task) {
                 tint = starColor,
                 modifier = Modifier.clickable {
                     task.isFavorite = !task.isFavorite
-                    isStarClickedState.value =  task.isFavorite
+                    isStarClickedState =  task.isFavorite
                 } // Add click listener
             )
         }
     }
+
+
 }
 
