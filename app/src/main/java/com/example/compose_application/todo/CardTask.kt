@@ -17,19 +17,13 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Card
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
-
-
-
 @Composable
 fun TaskCard(task: Task,onCompleteClick:() -> Unit) {
     var isStarClickedState by remember { mutableStateOf(task.isFavorite) }
@@ -55,11 +49,15 @@ fun TaskCard(task: Task,onCompleteClick:() -> Unit) {
                 contentDescription = "Task Status",
                 tint = completeColor,
                 modifier = Modifier.clickable {
+                    if (!task.isComplete){
+
+                    }
                     task.isComplete = !task.isComplete
-                    isCompleteClickedState =  task.isComplete
+//                    isCompleteClickedState = !isCompleteClickedState
                     onCompleteClick()
 
-                } // Add click listener
+                }
+
             )
 
             Spacer(modifier = Modifier.width(8.dp))
