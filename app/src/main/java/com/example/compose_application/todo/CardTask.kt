@@ -33,7 +33,7 @@ fun TaskCard(task: Task) {
     val isCompleteClickedState = remember { mutableStateOf(task.isComplete) }
 
     val starColor = if (isStarClickedState.value) Color(0xFFDAA520) else Color.DarkGray
-    val completeColor = if (isCompleteClickedState.value) Color(0xFFDAA520) else Color.DarkGray
+    val completeColor = if (isCompleteClickedState.value) Color.Green else Color.DarkGray
 
     Card(
         modifier = Modifier
