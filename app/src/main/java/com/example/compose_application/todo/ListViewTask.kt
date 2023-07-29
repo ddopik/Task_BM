@@ -1,22 +1,16 @@
 package com.example.compose_application.todo
 
 
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Modifier
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
+import kotlinx.coroutines.launch
 
 //@Preview(showBackground = true)
 //@Composable
@@ -41,18 +35,24 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun TaskList() {
 
-    val ongoingTasks = remember { mutableStateOf( defaultTasks.filter { !it.isComplete }) }
+    val ongoingTasks = remember { mutableStateOf(defaultTasks.filter { !it.isComplete }) }
     val completedTasks = remember { mutableStateOf(defaultTasks.filter { it.isComplete }) }
+    val listState = rememberLazyListState()
+    val scope = rememberCoroutineScope()
 
-
-    LazyColumn {
+    LazyColumn(state = listState) {
         item {
-            if (ongoingTasks.value.isNotEmpty()){
-                Text(text = "Ongoing Tasks", fontSize =40.sp)
-                for (task in ongoingTasks.value){
-                    TaskCard(task = task){
-                        ongoingTasks.value =  defaultTasks.filter { !it.isComplete}
-                        completedTasks.value = defaultTasks.filter { it.isComplete}
+            if (ongoingTasks.value.isNotEmpty()) {
+                Text(text = "Ongoing Tasks", fontSize = 40.sp)
+                for (task in ongoingTasks.value) {
+                    TaskCard(task = task) {
+                        ongoingTasks.value = defaultTasks.filter { !it.isComplete }
+                        completedTasks.value = defaultTasks.filter { it.isComplete }
+                        if (!listState.isScrollInProgress) {
+                            scope.launch {
+                                listState.animateScrollToItem(defaultTasks.size)
+                            }
+                        }
                     }
                 }
             }
